@@ -11,7 +11,6 @@ describe("ReverseDutchAuctionSwap", function () {
     beforeEach(async function () {
         [seller, buyer] = await ethers.getSigners();
 
-        // Deploy a real ERC20 token using OpenZeppelin's implementation
         const Token = await ethers.getContractFactory("ERC20");
         token = await Token.deploy("TestToken", "TT");
         await token.waitForDeployment();
@@ -32,7 +31,7 @@ describe("ReverseDutchAuctionSwap", function () {
     });
 
     it("should decrease price correctly over time", async function () {
-        await ethers.provider.send("evm_increaseTime", [300]); // Increase time by 5 minutes
+        await ethers.provider.send("evm_increaseTime", [300]); 
         await ethers.provider.send("evm_mine");
 
         const currentPrice = await swap.getCurrentPrice();
@@ -55,7 +54,7 @@ describe("ReverseDutchAuctionSwap", function () {
     });
 
     it("should end auction if no buyer purchases", async function () {
-        await ethers.provider.send("evm_increaseTime", [duration + 1]); // Increase time beyond duration
+        await ethers.provider.send("evm_increaseTime", [duration + 1]); 
         await ethers.provider.send("evm_mine");
 
         const currentPrice = await swap.getCurrentPrice();
